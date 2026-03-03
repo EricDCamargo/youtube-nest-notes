@@ -11,4 +11,8 @@ export class PrismaUserMapper {
       createdAt,
     };
   }
+
+  static toDomain({ id, name, email, password, createdAt }: UserRaw): User {
+    return new User({ name, email, password, createdAt }, id);
+  }
 }
