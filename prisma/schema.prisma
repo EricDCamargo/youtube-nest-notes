@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -11,7 +12,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id
+  id        String   @id
   name      String
   email     String   @unique
   password  String
