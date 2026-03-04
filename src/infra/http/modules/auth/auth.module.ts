@@ -7,9 +7,9 @@ import { DatabaseModule } from 'src/infra/database/database.module';
 import { SignInDTOValidadeMiddleware } from './middleware/signInDTOValidade.middleware';
 import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUseCase';
 import { JwtModule } from '@nestjs/jwt';
-import 'dotenv/config';
 import { StringValue } from 'ms';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
+import 'dotenv/config';
 
 @Module({
   imports: [

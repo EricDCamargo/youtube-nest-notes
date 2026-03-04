@@ -10,7 +10,6 @@ import {
 import { AuthRequestModel } from './models/authRequestModel';
 import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUseCase';
 import { LocalAuthGuard } from './guards/localAuth.guard';
-import { JwtAuthGuard } from './guards/jwtAuth.guard';
 import { Public } from './decorators/isPublic';
 import { AuthenticatedRequestModel } from './models/authenticatedRequestModel';
 
