@@ -6,7 +6,7 @@ export class SignInBody {
   @IsEmail()
   email: string;
 
-  @IsEmail()
+  @IsString()
   @MinLength(6)
   password: string;
 }

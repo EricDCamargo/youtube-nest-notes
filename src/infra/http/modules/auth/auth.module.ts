@@ -5,11 +5,23 @@ import { ValidadeUserUseCase } from 'src/modules/auth/useCases/validadeUserUseCa
 import { UserModule } from '../user/user.module';
 import { DatabaseModule } from 'src/infra/database/database.module';
 import { SignInDTOValidadeMiddleware } from './middleware/signInDTOValidade.middleware';
+import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUseCase';
+import { JwtModule } from '@nestjs/jwt';
+import 'dotenv/config';
+import { StringValue } from 'ms';
+import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
 
 @Module({
-  imports: [DatabaseModule, UserModule],
+  imports: [
+    DatabaseModule,
+    UserModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_EXPIRE as StringValue },
+    }),
+  ],
   controllers: [AuthController],
-  providers: [LocalStrategy, ValidadeUserUseCase],
+  providers: [LocalStrategy, JwtStrategy, ValidadeUserUseCase, SignInUseCase],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {
