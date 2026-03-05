@@ -23,7 +23,7 @@ model User {
 model Note {
   id          String   @id
   title       String
-  description String
+  description String?
   createdAt   DateTime
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String

@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './infra/http/modules/auth/guards/jwtAuth.guard';
 import { envValidationSchema } from './common/env.validation';
+import { NoteModule } from './infra/http/modules/note/note.module';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { envValidationSchema } from './common/env.validation';
       envFilePath: '.env',
       validationSchema: envValidationSchema,
     }),
-    UserModule,
     DatabaseModule,
+    UserModule,
     AuthModule,
+    NoteModule,
   ],
   controllers: [],
   providers: [

@@ -1,11 +1,15 @@
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { NoteRepository } from '../../entities/repositories/noteRepository';
 
 interface GetNoteRequest {
   noteId: string;
   userId: string;
 }
-
+@Injectable()
 export class GetNoteUseCase {
   constructor(private noteRepository: NoteRepository) {}
   async execute({ userId, noteId }: GetNoteRequest) {
