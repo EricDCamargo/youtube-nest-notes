@@ -1,17 +1,20 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmailCustom } from 'src/infra/http/classValidator/decorators/isEmailCustom';
+import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/isNotEmptyCustom';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/isStringCustom';
+import { MinLengthCustom } from 'src/infra/http/classValidator/decorators/minLengthCustom';
 
 export class CreateUserBody {
-  @IsString()
-  @IsEmail()
-  @IsNotEmpty()
+  @IsStringCustom()
+  @IsEmailCustom()
+  @IsNotEmptyCustom()
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsStringCustom()
+  @IsNotEmptyCustom()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(6)
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  @MinLengthCustom(6)
   password: string;
 }

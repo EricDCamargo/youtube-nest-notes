@@ -2,7 +2,8 @@ import { makeUser } from 'src/modules/user/factories/userFactory';
 import { NoteRepositoryInMemory } from '../../entities/repositories/noteRepositoryInMemory';
 import { DeleteNoteUseCase } from './deleteNoteUseCase';
 import { makeNote } from '../../factories/noteFactory';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { NoteNotFoundExeption } from '../../exceptions/NoteNotFoundExeption';
+import { NoteWithoutPermissonException } from '../../exceptions/NoteWithoutPermissonException';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let deleteNoteUseCase: DeleteNoteUseCase;
@@ -33,7 +34,7 @@ describe('Delete Note', () => {
         noteId: 'fakeId',
         userId: 'fakeId',
       });
-    }).rejects.toThrow(NotFoundException);
+    }).rejects.toThrow(NoteNotFoundExeption);
   });
 
   it('Should be able to throw an error when note has another userId', async () => {
@@ -45,6 +46,6 @@ describe('Delete Note', () => {
         noteId: note.id,
         userId: 'anotherUser',
       });
-    }).rejects.toThrow(UnauthorizedException);
+    }).rejects.toThrow(NoteWithoutPermissonException);
   });
 });

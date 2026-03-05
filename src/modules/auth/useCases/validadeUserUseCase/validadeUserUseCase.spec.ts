@@ -2,7 +2,7 @@ import { ValidadeUserUseCase } from './validadeUserUseCase';
 import { UserRepositoryInMemory } from 'src/modules/user/repositories/UserRepositoryInMemory';
 import { hash } from 'bcrypt';
 import { makeUser } from 'src/modules/user/factories/userFactory';
-import { UnauthorizedException } from '@nestjs/common';
+import { AuthValuesIncorrectExceptions } from '../../exceptions/AuthValuesIncorrectExceptions';
 
 let validadeUserUseCase: ValidadeUserUseCase;
 let userRepositoryInMemory: UserRepositoryInMemory;
@@ -43,13 +43,13 @@ describe('Validade User', () => {
         email: 'incorrect@gmail.com',
         password: userPasswordWithoutEncryption,
       });
-    }).rejects.toThrow(UnauthorizedException);
+    }).rejects.toThrow(AuthValuesIncorrectExceptions);
 
     expect(async () => {
       await validadeUserUseCase.execute({
         email: user.email,
         password: 'incorrectPassword',
       });
-    }).rejects.toThrow(UnauthorizedException);
+    }).rejects.toThrow(AuthValuesIncorrectExceptions);
   });
 });
