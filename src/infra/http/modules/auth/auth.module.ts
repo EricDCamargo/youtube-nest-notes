@@ -9,19 +9,33 @@ import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUse
 import { JwtModule } from '@nestjs/jwt';
 import { StringValue } from 'ms';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
-import 'dotenv/config';
+import { PrismaService } from 'src/infra/database/prisma/prisma.service';
+import { PassportModule } from '@nestjs/passport';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     DatabaseModule,
+    PassportModule,
     UserModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRE as StringValue },
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: {
+          expiresIn: configService.get<StringValue>('JWT_EXPIRE'),
+        },
+      }),
     }),
   ],
   controllers: [AuthController],
-  providers: [LocalStrategy, JwtStrategy, ValidadeUserUseCase, SignInUseCase],
+  providers: [
+    LocalStrategy,
+    JwtStrategy,
+    ValidadeUserUseCase,
+    SignInUseCase,
+    PrismaService,
+  ],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {

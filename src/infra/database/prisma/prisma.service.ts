@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from 'generated/prisma/client';
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PrismaService extends PrismaClient {
-  constructor() {
-    const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+  constructor(private readonly configService: ConfigService) {
+    const url = configService.get<string>('DATABASE_URL');
+
+    const adapter = new PrismaBetterSqlite3({ url });
     super({ adapter });
   }
 }
